@@ -137,6 +137,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Caddy for reverse proxy (used in Fly.io preview deployments)
+RUN curl -sSL "https://caddyserver.com/api/download?os=linux&arch=$(dpkg --print-architecture)" -o /usr/local/bin/caddy \
+    && chmod +x /usr/local/bin/caddy
+
 # Copy Node.js from node-runtime stage (platform-matched binary)
 COPY --from=node-runtime /usr/local/bin/node /usr/local/bin/node
 COPY --from=node-runtime /usr/local/lib/node_modules /usr/local/lib/node_modules
@@ -162,6 +166,9 @@ COPY scripts/ ./scripts/
 COPY pyproject.toml ./
 COPY requirements/ ./requirements/
 COPY requirements.txt ./
+
+# Copy Caddy reverse proxy config (for single-port deployments like Fly.io)
+COPY Caddyfile ./
 
 # Create necessary directories (these will be overwritten by volume mounts)
 RUN mkdir -p \
@@ -213,6 +220,16 @@ stdout_logfile_maxbytes=0
 stderr_logfile=/dev/fd/2
 stderr_logfile_maxbytes=0
 environment=NODE_ENV="production"
+
+[program:caddy]
+command=/usr/local/bin/caddy run --config /app/Caddyfile
+directory=/app
+autostart=true
+autorestart=true
+stdout_logfile=/dev/fd/1
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/fd/2
+stderr_logfile_maxbytes=0
 EOF
 
 RUN sed -i 's/\r$//' /etc/supervisor/conf.d/deeptutor.conf
@@ -329,7 +346,7 @@ EOF
 RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
 # Expose ports
-EXPOSE 8001 3782
+EXPOSE 8001 3782 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
