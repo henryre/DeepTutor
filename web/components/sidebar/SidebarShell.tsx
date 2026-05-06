@@ -176,6 +176,13 @@ export function SidebarShell({
             );
           })}
           {footerSlot}
+          <span
+            className="mt-1 text-[9px] text-[var(--muted-foreground)]/60"
+            style={{ fontFamily: "monospace" }}
+            title="Mod by henryre"
+          >
+            mod
+          </span>
           <a
             href={GITHUB_REPO_URL}
             target="_blank"
@@ -297,6 +304,12 @@ export function SidebarShell({
           );
         })}
         {footerSlot}
+        <div
+          className="px-3 py-1 text-[11px] text-[var(--muted-foreground)]/60"
+          style={{ fontFamily: "monospace" }}
+        >
+          Mod by henryre
+        </div>
         <div className="mt-0.5 flex items-center gap-0.5">
           <VersionBadge />
           <a
