@@ -1,0 +1,54 @@
+[lbm]
+version = 1
+ready_label = "ready-for-dev"
+
+guidance_file = "AGENTS.md"
+
+
+[build]
+runtime = "node"
+install = "npm ci"
+
+lint = "npm run lint"
+
+
+typecheck = "npx tsc --noEmit"
+
+
+build = "npm run build"
+
+
+[checks]
+required = ["CI"]
+repair_from = ["CI"]
+max_repair_attempts = 10
+max_ralph_loops = 0
+
+[deploy]
+platform = "fly"
+
+preview_env = "Preview"
+
+
+app_prefix = "deeptutor-pr"
+region = "iad"
+registry = "ghcr"
+
+
+
+
+[llm]
+provider = "anthropic"
+summary_model = "claude-sonnet-4-6"
+
+
+[harnesses.claude]
+mention = "@claude"
+
+
+
+[[agents]]
+harness = "claude"
+model_id = "claude-opus-4-6"
+model_label = "opus-4-6"
+
