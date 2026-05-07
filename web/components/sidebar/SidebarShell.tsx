@@ -176,6 +176,9 @@ export function SidebarShell({
             );
           })}
           {footerSlot}
+          <span className="mt-1 font-mono text-[9px] text-[var(--muted-foreground)]/60">
+            Mod by henryre
+          </span>
           <a
             href={GITHUB_REPO_URL}
             target="_blank"
@@ -297,6 +300,9 @@ export function SidebarShell({
           );
         })}
         {footerSlot}
+        <span className="px-3 py-1 font-mono text-[10px] text-[var(--muted-foreground)]/60">
+          Mod by henryre
+        </span>
         <div className="mt-0.5 flex items-center gap-0.5">
           <VersionBadge />
           <a
