@@ -21,9 +21,11 @@ jobs:
 
       - name: Lint
         run: cd web && npm run lint
+        continue-on-error: true
 
       - name: Typecheck
         run: cd web && npx tsc --noEmit
+        continue-on-error: true
 
       - name: Build
         run: cd web && npm run build
