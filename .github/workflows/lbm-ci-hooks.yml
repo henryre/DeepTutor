@@ -9,6 +9,7 @@ permissions:
   issues: write
   pull-requests: write
   actions: read
+  packages: write
 jobs:
   hooks:
     uses: henryre/lbm-poc/.github/workflows/_ci-hooks.yml@v1
