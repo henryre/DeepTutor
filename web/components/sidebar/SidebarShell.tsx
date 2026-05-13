@@ -17,6 +17,7 @@ import {
   PenLine,
   Plus,
   Settings,
+  Trophy,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -38,6 +39,7 @@ const PRIMARY_NAV: NavEntry[] = [
   { href: "/book", label: "Book", icon: Library },
   { href: "/knowledge", label: "Knowledge", icon: BookOpen },
   { href: "/space", label: "Space", icon: LayoutGrid },
+  { href: "/daily-trivia", label: "Daily Trivia", icon: Trophy },
 ];
 
 const SECONDARY_NAV: NavEntry[] = [
